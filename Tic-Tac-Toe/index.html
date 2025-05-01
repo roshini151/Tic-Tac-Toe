@@ -9,10 +9,16 @@
 <body>
     <div class="msg-container hide">
         <p id="msg">Winner</p>
-        <button id="new-btn">New Game</button>
     </div>
     <main>
         <h1>Tic Tac Toe</h1>
+        <h2 id="turn-indicator">Turn : Player O</h2>
+
+        <div class="score-board">
+            <p>Player O Score: <span id="scoreO">0</span></p>
+            <p>Player X Score: <span id="scoreX">0</span></p>
+        </div>
+
         <div class="container">
             <div class="game">
                 <button class="box"></button>
@@ -26,8 +32,11 @@
                 <button class="box"></button>
             </div>
         </div>
+        
         <button id="reset-btn">Reset Game</button>
+        <button id="new-btn">New Game</button>
     </main>
+
     <script src="app.js"></script>
 </body>
 </html>

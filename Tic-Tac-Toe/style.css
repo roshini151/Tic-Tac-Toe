@@ -1,6 +1,8 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body{
@@ -57,7 +59,7 @@ body{
     font-size: 8vmin;
 }
 .msg-container{
-   height: 100vmin;
+   height: 20vmin;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -66,4 +68,29 @@ body{
 }
 .hide{
     display: none;
+}
+
+.score-board{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: white;
+}
+
+@keyframes bounce{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+.win-box{
+    background-color: lightgreen !important;
+    animation: bounce 0.5s ease-in-out 3;
 }

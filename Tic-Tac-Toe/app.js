@@ -3,8 +3,15 @@ let resetBtn = document.querySelector("#reset-btn");
 let newGameBtn=document.querySelector("#new-btn");
 let msgContainer =document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
+let turnIndicator =document.querySelector("#turn-indicator");
 
-let turnO = true;//playerX,playerO
+let scoreO=0;
+let scoreX=0;
+const scoreOElem =document.querySelector("#scoreO");
+const scoreXElem =document.querySelector("#scoreX");
+
+let turnO = true; 
+let moveCount=0; //to track number of moves
 
 const winPatterns = [
     [0, 1, 2],
@@ -19,8 +26,10 @@ const winPatterns = [
 
 const resetGame = () =>{
     turnO = true;
+    moveCount=0;  //reset move count
     enableBoxes();
-    msgContainer.classList.add("hide");
+    turnIndicator.innerText="Turn: Player O";
+    msgContainer.classList.add("hide"); //hide 
 };
 
 boxes.forEach((box) => {
@@ -28,36 +37,47 @@ boxes.forEach((box) => {
         if(turnO) {
             //playerO
             box.innerText ="O";
+            turnIndicator.innerText="Turn: Player X";
             turnO = false;
         } else {
             //playerX
             box.innerText ="X";
+            turnIndicator.innerText="Turn: Player O";
             turnO = true;
         }
         box.disabled = true;
-
+        moveCount++;
         checkWinner();
     });
 });
 
 const disableBoxes = () => {
-    for(let box of boxes){
-        box.disabled = true;
-    }
+    boxes.forEach((box) =>{
+        box.disabled=true;
+    });
 };
 
 const enableBoxes = () => {
-    for(let box of boxes){
-        box.disabled = false;
-        box.innerText ="";
-
-    }
+    boxes.forEach((box) =>{
+        box.disabled=false;
+        box.innerText="";
+        box.classList.remove("win-box");
+   });
 };
 
 
 const showWinner = (winner) =>{
     msg.innerText = `Congratulations, Winner is ${winner}`;
     msgContainer.classList.remove("hide");
+
+    if(winner === "O"){
+        scoreO++;
+        scoreOElem.innerText=scoreO;
+    }
+    else{
+        scoreX++;
+        scoreXElem.innerText=scoreX;
+    }
     disableBoxes();
 };
 
@@ -69,9 +89,20 @@ const checkWinner = () => {
 
         if(pos1Val != "" && pos2Val !="" && pos3Val !=""){
             if(pos1Val === pos2Val && pos2Val === pos3Val){
-                showWinner(pos1Val);
+
+                boxes[pattern[0]].classList.add("win-box");
+                boxes[pattern[1]].classList.add("win-box");
+                boxes[pattern[2]].classList.add("win-box");
+                
+                showWinner(pos1Val); //pass winner ("O" or "x")
+                return; //stop if someone wins
             }
         }
+    }
+    // check for draw
+    if(moveCount === 9){
+        msg.innerText="It is a Draw!";
+        msgContainer.classList.remove("hide");
     }
 };
 
